@@ -81,7 +81,7 @@ abstract class GameServer extends Server {
      * @see splitPlayerStatus()
      */
     protected function getPlayerStatusAttributes($statusHeader) {
-        $statusAttributes = [];
+        $statusAttributes = array();
         foreach(preg_split("/\s+/", $statusHeader) as $attribute) {
             if($attribute == 'connected') {
                 $statusAttributes[] = 'time';
@@ -111,15 +111,15 @@ abstract class GameServer extends Server {
 
         $firstQuote = strpos($playerStatus, '"');
         $lastQuote  = strrpos($playerStatus, '"');
-        $data = [
+        $data = array(
             substr($playerStatus, 0, $firstQuote),
             substr($playerStatus, $firstQuote + 1, $lastQuote - 1 - $firstQuote),
             substr($playerStatus, $lastQuote + 1)
-        ];
+        );
 
         $data = array_merge(
             array_filter(preg_split("/\s+/", trim($data[0]))),
-            [$data[1]],
+            array($data[1]),
             preg_split("/\s+/", trim($data[2]))
         );
         $data = array_values($data);
@@ -132,7 +132,7 @@ abstract class GameServer extends Server {
             $data = array_values($data);
         }
 
-        $playerData = [];
+        $playerData = array();
         for($i = 0; $i < sizeof($data); $i ++) {
             $playerData[$attributes[$i]] = $data[$i];
         }
@@ -411,7 +411,7 @@ abstract class GameServer extends Server {
             $this->rconAuth($rconPassword);
         }
 
-        $players = [];
+        $players = array();
         foreach(explode("\n", $this->rconExec('status')) as $line) {
             if(strpos($line, '#') === 0 && $line != '#end') {
                 $players[] = trim(substr($line, 1));

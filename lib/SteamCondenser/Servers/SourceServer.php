@@ -130,7 +130,7 @@ class SourceServer extends GameServer {
         $this->rconSocket->send(new Packets\RCON\RCONExecRequest($this->rconRequestId, $command));
 
         $isMulti = false;
-        $response = [];
+        $response = array();
         do {
             $responsePacket = $this->rconSocket->getReply();
 
